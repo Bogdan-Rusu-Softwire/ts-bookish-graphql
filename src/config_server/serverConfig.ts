@@ -1,6 +1,5 @@
 import tedious, { ConnectionConfiguration, Connection } from 'tedious';
 import { PORT, server } from '../app';
-import { chooseSQLCommand, executeSQL } from '../services/bookService';
 
 export let connection: Connection;
 
@@ -32,7 +31,6 @@ export const runServerConfiguration = () => {
             server.listen(PORT, () => {
                 console.log(`Server is running on localhost:${PORT}`);
             });
-            chooseSQLCommand();
         }
     });
     // Initialize the connection.

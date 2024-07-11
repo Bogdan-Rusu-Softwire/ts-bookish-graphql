@@ -33,30 +33,14 @@ export const executeSQL = async (
                     (cell) => cell.metadata.colName === 'number_copies',
                 )[0].value,
             });
-
-            // columns.forEach((column) => {
-            //     if (column.value === null) {
-            //         console.log('NULL');
-            //     } else {
-            //         console.log(column.value);
-            //     }
-            // });
         });
 
         request.on('doneProc', () => {
             resolve(bookList);
-            //console.log("ajung iaic");
         });
 
         connection.execSql(request);
     });
-};
-
-export const chooseSQLCommand = () => {
-    // console.log("ajung acii");
-    // executeSQL('select * from Books').then((bookList) => {
-    //     console.log(bookList);
-    // });
 };
 
 export const getAllBooks = async (): Promise<DbBook[]> => {
