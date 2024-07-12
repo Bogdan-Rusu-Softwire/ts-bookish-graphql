@@ -25,13 +25,12 @@ export const runSQLServerConfiguration = (): Connection => {
         if (err) {
             console.log('Error: ', err);
         } else {
-            // If no error, then good to go...
             server.listen(PORT, () => {
                 console.log(`Server is running on localhost:${PORT}`);
             });
         }
     });
-    // Initialize the connection.
+
     connection.connect();
     return connection;
 };
