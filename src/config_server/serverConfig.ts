@@ -4,6 +4,8 @@ import { Sequelize, DataTypes } from 'sequelize';
 
 export let sequelizeInstance;
 export let Book;
+export let User;
+export let Loan;
 
 export const runServerConfiguration = () => {
     sequelizeInstance = new Sequelize(
@@ -33,6 +35,70 @@ export const runServerConfiguration = () => {
         },
         number_copies: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+    });
+
+    User = sequelizeInstance.define('User', {
+        id: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            primaryKey: true,
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        password_hash: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        token: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        token_expiration_date: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+    });
+
+    Loan = sequelizeInstance.define('Loan', {
+        id: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            primaryKey: true,
+        },
+        idBook: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            references: 'Books',
+            referencesKey: 'id',
+        },
+        idUser: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            references: 'Users',
+            referencesKey: 'id',
+        },
+        due: {
+            type: DataTypes.DATE,
             allowNull: false,
         },
         createdAt: {

@@ -19,3 +19,19 @@ export const getAllBooks = async (): Promise<(typeof Book)[]> => {
         },
     );
 };
+
+export const addBookToDB = async (book: DbBook): Promise<string> => {
+    try {
+        await Book.create({
+            id: book.id,
+            title: book.title,
+            author: book.author,
+            number_copies: book.number_copies,
+            created_at: '2024-07-12',
+            updatedAt: '2024-07-12',
+        });
+        return 'Successfully added book';
+    } catch {
+        return 'Error in adding book';
+    }
+};

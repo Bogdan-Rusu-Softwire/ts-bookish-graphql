@@ -12,6 +12,8 @@ const schema = buildSchema(`
     type Query {
         status: Int
         getBooks: [Book!]!
+        addBook(title): String
+        getUsers: [User!]!
     }
 `);
 
