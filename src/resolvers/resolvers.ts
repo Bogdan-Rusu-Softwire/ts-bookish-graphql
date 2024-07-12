@@ -5,8 +5,7 @@ const resolvers = {
     status: () => 200,
     getBooks: async () => {
         try {
-            const res = await getAllBooks();
-            return res;
+            return await getAllBooks();
         } catch (error) {
             throw new Error(`Failed to fetch books: ${error.message}`);
         }

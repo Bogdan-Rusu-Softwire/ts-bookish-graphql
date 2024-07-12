@@ -1,11 +1,9 @@
 import tedious, { ConnectionConfiguration, Connection } from 'tedious';
 import { PORT, server } from '../app';
 
-export let connection: Connection;
-
-export const runServerConfiguration = () => {
+export const runSQLServerConfiguration = (): Connection => {
     const config: ConnectionConfiguration = {
-        server: 'localhost', // or "localhost"
+        server: 'localhost',
         authentication: {
             type: 'default',
             options: {
@@ -21,7 +19,7 @@ export const runServerConfiguration = () => {
         },
     };
 
-    connection = new Connection(config);
+    const connection = new Connection(config);
 
     connection.on('connect', function (err) {
         if (err) {
@@ -35,4 +33,5 @@ export const runServerConfiguration = () => {
     });
     // Initialize the connection.
     connection.connect();
+    return connection;
 };

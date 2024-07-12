@@ -1,5 +1,5 @@
 import { Request } from 'tedious';
-import { connection } from '../config_server/serverConfig';
+import { connection } from '../app';
 import { DbBook } from '../models/DbBook';
 
 export const executeSQL = async (
