@@ -1,5 +1,5 @@
 import { sequelizeInstance } from '../config_server/serverConfig';
-import { Book } from '../config_server/serverConfig';
+import { Book, User, Loan } from '../config_server/serverConfig';
 import { DbBook } from '../models/DbBook';
 
 export const chooseSQLCommand = async () => {
@@ -8,16 +8,18 @@ export const chooseSQLCommand = async () => {
 
 export const getAllBooksDB = async (): Promise<(typeof Book)[]> => {
     // TODO: implement functionality
-    return (await sequelizeInstance.models.Book.findAll()).map(
-        (item): DbBook => {
-            return {
-                id: item.dataValues.id,
-                title: item.dataValues.title,
-                author: item.dataValues.author,
-                number_copies: item.dataValues.number_copies,
-            };
-        },
-    );
+    return (
+        await sequelizeInstance.models.Book.findAll({
+            order: [['title', 'ASC']],
+        })
+    ).map((item): DbBook => {
+        return {
+            id: item.dataValues.id,
+            title: item.dataValues.title,
+            author: item.dataValues.author,
+            number_copies: item.dataValues.number_copies,
+        };
+    });
 };
 
 export const addBookToDB = async (book: DbBook): Promise<string> => {
@@ -39,10 +41,18 @@ export const getLoanedBooksUserDB = async (
     username: string,
 ): Promise<(typeof Book)[]> => {
     try {
-        const [results, metadata] = await sequelizeInstance.query(
-            `Select Books.*  From Books, Loans, Users WHERE Books.id = Loans.book_id AND Users.id = Loans.[user_id] AND Users.[name] = '${username}'`,
-        );
-        return results.map((item): DbBook => {
+        const userLoans = (
+            await Book.findAll({
+                include: [
+                    {
+                        model: Loan,
+                        where: {
+                            user_id: username,
+                        },
+                    },
+                ],
+            })
+        ).map((item): DbBook => {
             return {
                 id: item.id,
                 title: item.title,
@@ -50,6 +60,60 @@ export const getLoanedBooksUserDB = async (
                 number_copies: item.number_copies,
             };
         });
+        console.log(userLoans);
+        return userLoans;
+    } catch (err) {
+        console.log(err);
+        return [];
+    }
+};
+
+export const getBookByTitle = async (
+    title: string,
+): Promise<(typeof Book)[]> => {
+    try {
+        const book = (
+            await Book.findAll({
+                where: {
+                    title: title,
+                },
+            })
+        ).map((item): DbBook => {
+            return {
+                id: item.dataValues.id,
+                title: item.dataValues.title,
+                author: item.dataValues.author,
+                number_copies: item.dataValues.number_copies,
+            };
+        });
+        console.log(book);
+        return book;
+    } catch (err) {
+        console.log(err);
+        return [];
+    }
+};
+
+export const getBookByAuthor = async (
+    author: string,
+): Promise<(typeof Book)[]> => {
+    try {
+        const book = (
+            await Book.findAll({
+                where: {
+                    author: author,
+                },
+            })
+        ).map((item): DbBook => {
+            return {
+                id: item.dataValues.id,
+                title: item.dataValues.title,
+                author: item.dataValues.author,
+                number_copies: item.dataValues.number_copies,
+            };
+        });
+        console.log(book);
+        return book;
     } catch (err) {
         console.log(err);
         return [];

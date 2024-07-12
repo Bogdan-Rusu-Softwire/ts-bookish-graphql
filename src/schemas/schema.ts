@@ -16,11 +16,20 @@ const schema = buildSchema(`
         token: String!
         token_exp_date: String!
     }
+    
+    type Loan {
+        id: String!
+        user_id: String!
+        book_id: String!
+        due: String!
+    }
 
     type Query {
         status: Int
         getBooks: [Book!]!
         getLoanedBooksUser(username: String!): [Book]
+        getBookByTitle(title: String!): [Book]
+        getBookByAuthor(author: String!): [Book]
     }
     
     type Mutation {

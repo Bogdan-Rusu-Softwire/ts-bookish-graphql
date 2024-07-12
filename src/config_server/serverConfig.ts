@@ -65,7 +65,7 @@ export const runServerConfiguration = async () => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        token_expiration_date: {
+        token_exp_date: {
             type: DataTypes.DATE,
             allowNull: false,
         },
@@ -85,13 +85,13 @@ export const runServerConfiguration = async () => {
             allowNull: false,
             primaryKey: true,
         },
-        idBook: {
+        book_id: {
             type: DataTypes.STRING,
             allowNull: false,
             references: 'Books',
             referencesKey: 'id',
         },
-        idUser: {
+        user_id: {
             type: DataTypes.STRING,
             allowNull: false,
             references: 'Users',
@@ -109,6 +109,22 @@ export const runServerConfiguration = async () => {
             type: DataTypes.DATE,
             allowNull: true,
         },
+    });
+
+    Book.hasMany(sequelizeInstance.models.Loan, {
+        foreignKey: 'book_id',
+    });
+
+    Loan.belongsTo(sequelizeInstance.models.Book, {
+        foreignKey: 'book_id',
+    });
+
+    User.hasMany(sequelizeInstance.models.Loan, {
+        foreignKey: 'user_id',
+    });
+
+    Loan.belongsTo(sequelizeInstance.models.User, {
+        foreignKey: 'user_id',
     });
 
     server.listen(PORT, () => {

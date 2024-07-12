@@ -1,7 +1,9 @@
 import {
     addBookToDB,
     getAllBooksDB,
+    getBookByTitle,
     getLoanedBooksUserDB,
+    getBookByAuthor
 } from '../services/bookService';
 import { DbBook } from '../models/DbBook';
 
@@ -28,6 +30,24 @@ const resolvers = {
         } catch (error) {
             throw new Error(
                 `Failed to get loaned books from this user: ${error.message}`,
+            );
+        }
+    },
+    getBookByTitle: async (wrapper: { title: string }) => {
+        try {
+            return await getBookByTitle(wrapper.title);
+        } catch (err) {
+            throw new Error(
+                `Failed to get the book with this title: ${err.message}`,
+            );
+        }
+    },
+    getBookByAuthor: async (wrapper: { author: string }) => {
+        try {
+            return await getBookByAuthor(wrapper.author);
+        } catch (err) {
+            throw new Error(
+                `Failed to get the book with this title: ${err.message}`,
             );
         }
     },
