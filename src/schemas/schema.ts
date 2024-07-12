@@ -3,7 +3,7 @@ import { buildSchema } from 'graphql';
 // TODO: implement functionality
 const schema = buildSchema(`
     type Book {
-        isbn: String!
+        id: String!
         author: String
         title: String
         number_copies: Int

@@ -1,5 +1,5 @@
 export interface DbBook {
-    isbn: string;
+    id: string;
     title: string;
     author: string;
     number_copies: string;
