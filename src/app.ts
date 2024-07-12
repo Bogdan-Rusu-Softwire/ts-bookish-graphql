@@ -2,10 +2,12 @@ import express from 'express';
 import schema from './schemas/schema';
 import resolvers from './resolvers/resolvers';
 import { graphqlHTTP } from 'express-graphql';
+import { runSQLServerConfiguration } from './config_server/serverConfig';
+import { Connection } from 'tedious';
 
-const server = express();
+export const server = express();
 
-const PORT = 3000;
+export const PORT = 3000;
 
 server.use(
     '/graphql',
@@ -16,6 +18,4 @@ server.use(
     }),
 );
 
-server.listen(PORT, () => {
-    console.log(`Server is running on localhost:${PORT}`);
-});
+export const connection: Connection = runSQLServerConfiguration();
