@@ -7,7 +7,7 @@ export let Book;
 export let User;
 export let Loan;
 
-export const runServerConfiguration = () => {
+export const runServerConfiguration = async () => {
     sequelizeInstance = new Sequelize(
         'bookish',
         'Bogdan',
@@ -39,11 +39,11 @@ export const runServerConfiguration = () => {
         },
         createdAt: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
         updatedAt: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
     });
 
@@ -71,11 +71,11 @@ export const runServerConfiguration = () => {
         },
         createdAt: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
         updatedAt: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
     });
 
@@ -103,11 +103,11 @@ export const runServerConfiguration = () => {
         },
         createdAt: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
         updatedAt: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
     });
 

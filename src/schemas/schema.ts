@@ -8,12 +8,23 @@ const schema = buildSchema(`
         title: String
         number_copies: Int
     }
+    
+    type User {
+        id: String!
+        name: String!
+        password_hash: String!
+        token: String!
+        token_exp_date: String!
+    }
 
     type Query {
         status: Int
         getBooks: [Book!]!
-        addBook(title): String
-        getUsers: [User!]!
+        getLoanedBooksUser(username: String!): [Book]
+    }
+    
+    type Mutation {
+        addBook(id: String!, title: String!, author: String!, number_copies: Int!): String
     }
 `);
 
